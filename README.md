@@ -21,6 +21,9 @@ JWT_SECRET = 'abc123'
 GOOGLE_MAPS_API_KEY=ABCD1234
 GOOGLE_AI_API_KEY=ABCD1234
 GOOGLE_APPLICATION_CREDENTIALS="C:\Path\To\Auth.json"
+EMAIL_USER = "sender@example.com"
+EMAIL_PASS = "See Nodemailer section"
+ADMIN_EMAIL = "reciever@example.com"
 ```
 
 ### Authentication
@@ -57,7 +60,7 @@ https://www.mongodb.com/try/download/community-kubernetes-operator
 
 3. Create a free DB online using MongoDB Atlas (Links below)
 
-https://www.mongodb.com/lp/cloud/atlas/try4-reg?utm_source=google&utm_campaign=search_gs_pl_evergreen_atlas_core-high-int_prosp-brand_gic-null_ww-tier1_ps-all_desktop_eng_lead&utm_term=atlas%20mongodb&utm_medium=cpc_paid_search&utm_ad=p&utm_ad_campaign_id=22031347569&adgroup=173739098393&cq_cmp=22031347569&gad_source=1&gclid=Cj0KCQjwkN--BhDkARIsAD_mnIouAdtcJEgv3IPKGPZrGnDaLv9Z1tzM3GQcBn3VSr9nBkTzrZc7Tm8aAvltEALw_wcB 
+https://www.mongodb.com/lp/cloud/atlas/try4-reg
 
 https://www.mongodb.com/resources/basics/databases/free 
 
@@ -68,6 +71,16 @@ https://gist.github.com/EscWasTaken/3f08797d7470237ae3c2ed0dd149aace
 A great tool for connecting, testing, editing, exporting and importing data into mongo databases.
 
 https://www.mongodb.com/products/tools/compass 
+
+### Nodemailer
+[Nodemailer](https://nodemailer.com/) is the package used by EVAT-BE for sending admin email 2FA codes. At time of writing, it is setup to work with Gmail sending to a fixed sender address.
+
+It will send from `EMAIL_USER` in the `.env` file to `ADMIN_EMAIL`, also in the `.env` file. These emails should be different to prevent issues with sending.
+
+It may make more sense to send 2FA codes to the email of the admin user in the database, however this has not been implemented. If this were to be implemented it would also be beneficial to implement admin password hashing similar to how it is done for users, as the admin feature was developed independently.
+
+To setup your Gmail account for Nodemailer, [follow these instructions](https://nodemailer.com/usage/using-gmail), and use the 'App Password' and place it into the `EMAIL_PASS` variable in the `.env` file.
+This should be a 16 character string such as 'abcd efgh ijkl mnop'.
 
 ## Install Dependencies
 
