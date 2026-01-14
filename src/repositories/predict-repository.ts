@@ -53,12 +53,10 @@ class PredictRepository {
     }, {
       upsert: true // Insert if entry doesn't exist
     });
-    console.log("Acknowledged: " + status.acknowledged);
-    console.log(status.matchedCount);
-    console.log(status.modifiedCount);
-    console.log(status.upsertedCount);
-    console.log(status.upsertedId);
     
+    // If a congestion level is set to what it was already, the modifiedCount will be 0,
+    // causing an error for non-issues. The best way to resolve this is to just check that
+    // the matched count is greater than 0, meaning it found the value to update in the DB
     return status.matchedCount > 0;
   }
 }
