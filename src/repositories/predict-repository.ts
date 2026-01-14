@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import Congestion, { ICongestion } from "../models/congestion-model";
 import { FilterQuery, UpdateQuery, Types } from "mongoose";
 import mongoose from "mongoose";
@@ -52,8 +53,13 @@ class PredictRepository {
     }, {
       upsert: true // Insert if entry doesn't exist
     });
+    console.log("Acknowledged: " + status.acknowledged);
+    console.log(status.matchedCount);
+    console.log(status.modifiedCount);
+    console.log(status.upsertedCount);
+    console.log(status.upsertedId);
     
-    return status.upsertedCount + status.modifiedCount > 0;
+    return status.matchedCount > 0;
   }
 }
 
