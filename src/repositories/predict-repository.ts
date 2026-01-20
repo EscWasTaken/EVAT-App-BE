@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import Congestion, { ICongestion } from "../models/congestion-model";
 import { FilterQuery, UpdateQuery, Types } from "mongoose";
 import mongoose from "mongoose";
@@ -53,7 +54,10 @@ class PredictRepository {
       upsert: true // Insert if entry doesn't exist
     });
     
-    return status.upsertedCount + status.modifiedCount > 0;
+    // If a congestion level is set to what it was already, the modifiedCount will be 0,
+    // causing an error for non-issues. The best way to resolve this is to just check that
+    // the matched count is greater than 0, meaning it found the value to update in the DB
+    return status.matchedCount > 0;
   }
 }
 
